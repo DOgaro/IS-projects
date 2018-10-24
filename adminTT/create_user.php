@@ -218,11 +218,11 @@ $("#house").html(houses);
      <option value="0">Select House</option> 
      <?php 
          include('database.php');
-         $sql = mysqli_query($con,"SELECT house FROM house WHERE (blockname='$blockname' AND status='Vacant')");
+         $sql = mysqli_query($con,"SELECT `house` FROM house WHERE blockname='$blockname' AND `status`='Vacant'");
 
          while($row = mysqli_fetch_array($sql)) 
              echo "<option value='" . $row['house'] . "'>" . $row['house'] . "</option>";
-           $sql = mysqli_query($con,"UPDATE house FROM house SET status='Occupied' WHERE house='$house'");
+           $sql = mysqli_query($con,"UPDATE `house` SET `status` = 'Occupied' WHERE `house` = '$house'");
          ?>
      </select>
 </li>

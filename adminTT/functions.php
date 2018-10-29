@@ -25,7 +25,6 @@ function register(){
 	$username    =  e($_POST['username']);
 	$Email       =  e($_POST['Email']);
 	$password  =  e($_POST['password']);
-	//$cpassword  =  e($_POST['cpassword']);
 	$Contact    =  e($_POST['Contact']);
 
 	// form validation: ensure that the form is correctly filled
@@ -41,9 +40,6 @@ function register(){
 	if (empty($password)) { 
 		array_push($errors, "Password is required"); 
 	}
-	//if ($password != $cpassword) {
-	//	array_push($errors, "The two passwords do not match");
-	//}
 	if (empty($Contact)) { 
 		array_push($errors, "Contact is required"); 
 	}

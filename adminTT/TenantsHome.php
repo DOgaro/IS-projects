@@ -1,5 +1,5 @@
 <?php
-include('../login/functionss.php');
+include('functionss.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,30 +43,6 @@ include('../login/functionss.php');
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 </script>
-<script type="text/javascript">
-$(document).ready(function()
-{
-$("#blockname").change(function()
-{
-var blockname=$(this).val();
-var post_id = 'id='+ blockname;
- 
-$.ajax
-({
-type: "POST",
-url: "ajax.php",
-data: post_id,
-cache: false,
-success: function(houses)
-{
-$("#house").html(houses);
-} 
-});
- 
-});
-});
-</script>
-
   </head>
 
   <body id="page-top">
@@ -95,8 +71,8 @@ $("#house").html(houses);
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle fa-fw"></i></i><?php  if (isset($_SESSION['user'])) : ?>
-          <strong><?php echo $_SESSION['user']['username']; ?></strong><?php endif ?>
+            <i class="fas fa-user-circle fa-fw"></i></i><?php  if (isset($_SESSION['id'])) : ?>
+          <strong><?php echo $_SESSION['id']['username']; ?></strong><?php endif ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <div class="dropdown-divider"></div>
@@ -119,13 +95,13 @@ $("#house").html(houses);
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="admin.php">
+          <a class="nav-link" href="TenantsHome.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="comments.php">
             <i class="fas fa-comments"></i>
             <span>Announcements</span></a>
         </li>
@@ -144,57 +120,40 @@ $("#house").html(houses);
           </ol>
 
 
-<?php
-	$con=mysqli_connect("localhost","root","","kejamanage");
-    // Check connection
-    if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }
-	$result = mysqli_query($con,"SELECT * FROM tenants WHERE username='$username'");
-       while($row = mysqli_fetch_array($result))
-	{
-		$name=$rowvalue['name'];
-		$username=$rowvalue['username'];
-		$Email=$rowvalue['	Email'];
-		$password=$rowvalue['password'];
-		$contact=$rowvalue['contact'];
-		$blockname=$rowvalue['blockname'];
-		$house=$rowvalue['house'];
-		$Equipments=$rowvalue['Equipments'];
-		$rent=$rowvalue['rent'];
-		$date=$rowvalue['date'];
-	}
-?>
 
 <html>
 <body>
-<form class="form-style-9">
-<ul>
-<li>
-    NAME: <input type="text" name="name" class="field-style field-split align-left" value='<?php echo $name; ?>' />
-    USERNAME: <input type="text" name="username" class="field-style field-split align-right" value='<?php echo $username; ?>' />
+<div class="content">
+        <!-- notification message -->
+        <?php if (isset($_SESSION['success'])) : ?>
+            <div class="error success" >
+                <h3>
+                    <?php 
+                        echo $_SESSION['success']; 
+                        unset($_SESSION['success']);
+                    ?>
+                </h3>
+            </div>
+        <?php endif ?>
 
-</li>
-<li>
-    <input type="email" name="Email" class="field-style field-split align-left" value='<?php echo $Email; ?>' />
-    <input type="password" name="password" class="field-style field-split align-right" value='<?php echo $password; ?>' />
-</li>
-<li>
-    <input type="text" name="Contact" class="field-style field-split align-left" value='<?php echo $contact; ?>'" />
-    
-</li>
-<li>
-     <input type="text" name="blockname" class="field-style field-split align-left" value='<?php echo $blockname; ?>'" />
-    <input type="text" name="house" class="field-style field-split align-right" value='<?php echo $house; ?>' />
-</li>
-<li>
-     <input type="text" name="rent" class="field-style field-split align-right" value='<?php echo $rent; ?>' />
-     <input type="text" name="date" class="field-style field-split align-right" value='<?php echo $date; ?>' />
-</li>
-<li>
-<textarea name="Equipments" class="field-style one" value='<?php echo $Equipments; ?>'></textarea>
-</li>
-</ul>
-</form>
+        <!-- logged in user information -->
+        <div class="profile_info">
+            <img src="avatar.png" style="height: 70px;">
+            <div>
+                <?php  if (isset($_SESSION['id'])) : ?>
+                   Username: <strong style="color: #888;"><?php echo $_SESSION['id']['username']; ?></strong><br>
+                   Name:  <strong style="color: #888;"><?php echo $_SESSION['id']['name']; ?></strong><br>
+                   Email:  <strong style="color: #888;"><?php echo $_SESSION['id']['Email']; ?></strong><br>
+                   Contact: <strong style="color: #888;"><?php echo $_SESSION['id']['Contact']; ?></strong><br>
+                   Block: <strong style="color: #888;"><?php echo $_SESSION['id']['blockname']; ?></strong><br>
+                   House: <strong style="color: #888;"><?php echo $_SESSION['id']['house']; ?></strong><br>
+                   Rent: <strong style="color: #888;"><?php echo $_SESSION['id']['rent']; ?></strong><br>
+                   Equipments: <strong style="color: #888;"><?php echo $_SESSION['id']['Equipments']; ?></strong><br>
+                   <a href="TenantsHome.php?logout='1'" style="color: red;">LOGOUT</a>
+
+                <?php endif ?>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

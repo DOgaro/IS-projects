@@ -84,7 +84,7 @@ function register(){
 			// get id of the created user
 			$logged_in_user_id = mysqli_insert_id($db);
 
-			$_SESSION['1'] = getUserById($logged_in_user_id); // put logged in user in session
+			$_SESSION['id'] = getUserById($logged_in_user_id); // put logged in user in session
 			$_SESSION['success']  = "You are now logged in";
 			header('location: ../adminTT/admin.php');				
 		}
@@ -94,7 +94,8 @@ function register(){
 // return user array from their id
 function getUserById($id){
 	global $db;
-	$query = "SELECT * FROM tenants WHERE id=" . $id;
+    $id=$_GET['id'];
+	$query = 'SELECT * FROM tenants WHERE id='.$id.'';
 	$result = mysqli_query($db, $query);
 
 	$user = mysqli_fetch_assoc($result);

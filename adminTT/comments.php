@@ -1,5 +1,5 @@
 <?php 
-include('functions.php');
+include('functionss.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -150,8 +150,8 @@ span.posted-by {
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle fa-fw"></i></i><?php  if (isset($_SESSION['user'])) : ?>
-          <strong><?php echo $_SESSION['user']['username']; ?></strong><?php endif ?>
+            <i class="fas fa-user-circle fa-fw"></i></i><?php  if (isset($_SESSION['id'])) : ?>
+          <strong><?php echo $_SESSION['id']['username']; ?></strong><?php endif ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <div class="dropdown-divider"></div>
@@ -174,7 +174,7 @@ span.posted-by {
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="caretaker.php">
+          <a class="nav-link" href="TenantsHome.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>

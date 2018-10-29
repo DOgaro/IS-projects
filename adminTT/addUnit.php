@@ -223,7 +223,7 @@ if (!isAdmin()) {
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="indexTT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
@@ -273,36 +273,51 @@ if (!isAdmin()) {
 </ul>
 </form>
 
-<div id="wrapper">
-        <section id="admin">
-    <h1>UNITS</h1>
-    <table class="data-table">  
-        <thead>
-            <tr>
-                <th>NO</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="container-fluid bg-3 text-center">    
+  <div class="row">
+      <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "kejamanage";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM block";
+$result = $conn->query($sql);
+
+?>
+<div class="table-responsive">
+<table class="table">
+        <tr class="header">
+            <td>Block</td>
+            <td>Description</td>
+            <td><i class="fas fa-trash-alt"></i></td>
+        </tr>
         <?php
-        $no     = 1;
-        while ($row = mysqli_fetch_array($query))
-        {
-            echo '<tr>
-                    <td>'.$no.'</td>
-                    <td>'.$row['blockname'].'</td>
-                    <td>'.$row['description'].'</td>
-                    <td><i class="fas fa-user-edit"></i></td>
-                    <td><input type="submit" name="update_btn" value="Update"/></td>
-                </tr>';
-            $no++;
-        }?>
-        </tbody>
+           while ($row =$result->fetch_assoc()) {
+            $n=$row['blockname'];
+            $um=$row['description'];
+               echo "<tr class= info>";
+               echo "<td>".$n."</td>";
+               echo "<td>".$um."</td>";
+               echo "<td><a class=\"btn btn-danger\" href=\"delete.php?username=".$um."\">Delete</a></td>";
+               echo "</tr>";
+           }
+
+$conn->close();
+        ?>
     </table>
-</section>
-    </div>
+    </div>             
+              <hr/>         
+  </div>
+</div>
+
 
     <!-- /#wrapper -->
 

@@ -107,7 +107,7 @@ if (!isAdmin()) {
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="indexTT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
@@ -142,22 +142,6 @@ if (!isAdmin()) {
 
           <!-- Icon Cards-->
           <div class="row">
-            <div class="col-xl-3 col-sm-6 mb-3">
-              <div class="card text-white bg-primary o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-users"></i>
-                  </div>
-                  <div class="mr-5">Enrolled Tenants</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1" href="tenants.php">
-                  <span class="float-left">View Tenants</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
             <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-success o-hidden h-100">
                 <div class="card-body">
@@ -216,6 +200,22 @@ if (!isAdmin()) {
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="../adminTT/create_caretaker.php">
                   <span class="float-left">Add Caretaker</span>
+                  <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <div class="mr-5">Enrolled Tenants</div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="indexTT.php">
+                  <span class="float-left">View Tenants</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>

@@ -1,4 +1,6 @@
-
+<?php
+include ('functions.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -195,51 +197,15 @@ $("#house").html(houses);
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="admin.php">
+          <a class="nav-link" href="caretaker.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="addUnit.php">
-            <i class="fas fa-home"></i>
-            <span>Add Unit</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="addHouse.php">
-            <i class="fas fa-home"></i>
-            <span>Add House</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../adminTT/create_user.php">
-            <i class="fas fa-user-plus"></i>
-            <span>Add Tenant</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../adminTT/create_caretaker.php">
-            <i class="fas fa-user-plus"></i>
-            <span>Add Caretaker</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="indexTT.php">
-            <i class="fas fa-users"></i>
-            <span>Tenants</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="comments.php">
             <i class="fas fa-comments"></i>
             <span>Announcements</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
-            <i class="fas fa-dollar-sign"></i>
-            <span>Payments</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="deleteF.php">
-            <i class="fas fa-trash-alt"></i>
-            <span>Remove User</span></a>
         </li>
       </ul>
 
@@ -258,9 +224,9 @@ $("#house").html(houses);
 require_once "db.php";
 
 if(isset($_POST["submit"]) && $_POST["submit"]!="") {
-$usersCount = count($_POST["username"]);
+$usersCount = count($_GET["username"]);
 for($i=0;$i<$usersCount;$i++) {
-mysqli_query($conn, "UPDATE tenants SET id='" . $_POST["id"][$i] . "', username='" . $_POST["username"][$i] . "', name='" . $_POST["name"][$i] . "', Email='" . $_POST["Email"][$i] . "', Contact='" . $_POST["Contact"][$i] . "', blockname='" . $_POST["blockname"][$i] . "', house='" . $_POST["house"][$i] . "', rent='" . $_POST["rent"][$i] . "', Equipments='" . $_POST["Equipments"][$i] . "' WHERE id='" . $_POST["id"][$i] . "'");
+mysqli_query($conn, "SELECT * FROM tenants WHERE username='" . $_GET["username"][$i] . "', username='" . $_GET["username"][$i] . "', name='" . $_GET["name"][$i] . "', Email='" . $_GET["Email"][$i] . "', Contact='" . $_GET["Contact"][$i] . "', blockname='" . $_GET["blockname"][$i] . "', house='" . $_GET["house"][$i] . "', rent='" . $_GET["rent"][$i] . "', Equipments='" . $_GET["Equipments"][$i] . "' WHERE id='" . $_GET["id"][$i] . "'");
 //header("Location: indexTT.php");
 echo("Changed successfully");
 }
@@ -270,13 +236,13 @@ echo("Changed successfully");
 <div style="width:500px;">
 <table border="0" cellpadding="10" cellspacing="0" width="500" align="center" class="data-table">
 <tr class="tableheader">
-<td>Edit Tenant</td>
+<td>My Profile</td>
 </tr>
 <?php
-$rowCount = count($_POST["id"]);
-for($i=0;$i<$rowCount;$i++) {
-$result = mysqli_query($conn, "SELECT * FROM tenants WHERE id='" . $_POST["id"][$i] . "'");
-$row[$i]= mysqli_fetch_array($result);
+//$rowCount = count($_GET["username"]);
+//for($i=0;$i<$rowCount;$i++) {
+//$result = mysqli_query($conn, "SELECT * FROM tenants WHERE username='" . $_GET["username"][$i] . "'");
+//$row[$i]= mysqli_fetch_array($result);
 ?>
 <tr>
 <td>
@@ -314,10 +280,9 @@ $row[$i]= mysqli_fetch_array($result);
 </td>
 </tr>
 <?php
-}
+
 ?>
 <tr>
-<td colspan="2"><input type="submit" name="submit" value="Save" class="btnSubmit"></td>
 </tr>
 </table>
 </div>

@@ -1,4 +1,23 @@
+<?php
+include('functions.php');
+$db_host = 'localhost'; // Server Name
+$db_user = 'root'; // Username
+$db_pass = ''; // Password
+$db_name = 'kejamanage'; // Database Name
 
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+if (!$conn) {
+    die ('Failed to connect to MySQL: ' . mysqli_connect_error());  
+}
+
+$sql = 'SELECT * 
+        FROM tenants';
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+    die ('SQL Error: ' . mysqli_error($conn));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,33 +57,7 @@
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="stylesss.css" />
-    <link rel="stylesheet" type="text/css" href="style.css">
-
     <script language="javascript" src="users.js" type="text/javascript"></script>
-    <script type="text/javascript">
-$(document).ready(function()
-{
-$("#blockname").change(function()
-{
-var blockname=$(this).val();
-var post_id = 'id='+ blockname;
- 
-$.ajax
-({
-type: "POST",
-url: "ajax.php",
-data: post_id,
-cache: false,
-success: function(houses)
-{
-$("#house").html(houses);
-} 
-});
- 
-});
-});
-</script>
      <style type="text/css">
         body {
             font-size: 15px;
@@ -195,49 +188,28 @@ $("#house").html(houses);
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="admin.php">
+          <a class="nav-link" href="caretaker.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="addUnit.php">
-            <i class="fas fa-home"></i>
-            <span>Add Unit</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="addHouse.php">
-            <i class="fas fa-home"></i>
-            <span>Add House</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../adminTT/create_user.php">
-            <i class="fas fa-user-plus"></i>
-            <span>Add Tenant</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../adminTT/create_caretaker.php">
-            <i class="fas fa-user-plus"></i>
-            <span>Add Caretaker</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="indexTT.php">
+          <a class="nav-link" href="indexT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="indexC.php">
             <i class="fas fa-comments"></i>
             <span>Announcements</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="caretakerTenants.php">
             <i class="fas fa-dollar-sign"></i>
             <span>Payments</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="deleteF.php">
+          <a class="nav-link" href="deleteT.php">
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
@@ -254,72 +226,81 @@ $("#house").html(houses);
             </li>
             <li class="breadcrumb-item active">KejaManage</li>
           </ol>
-<?php
-require_once "db.php";
+<body>
 
-if(isset($_POST["submit"]) && $_POST["submit"]!="") {
-$usersCount = count($_POST["username"]);
-for($i=0;$i<$usersCount;$i++) {
-mysqli_query($conn, "UPDATE tenants SET id='" . $_POST["id"][$i] . "', username='" . $_POST["username"][$i] . "', name='" . $_POST["name"][$i] . "', Email='" . $_POST["Email"][$i] . "', Contact='" . $_POST["Contact"][$i] . "', blockname='" . $_POST["blockname"][$i] . "', house='" . $_POST["house"][$i] . "', rent='" . $_POST["rent"][$i] . "', Equipments='" . $_POST["Equipments"][$i] . "' WHERE id='" . $_POST["id"][$i] . "'");
-//header("Location: indexTT.php");
-echo("Changed successfully");
-}
-}
-?>
-<form name="frmUser" method="post" action="" class="form-style-9" >
-<div style="width:500px;">
-<table border="0" cellpadding="10" cellspacing="0" width="500" align="center" class="data-table">
-<tr class="tableheader">
-<td>Edit Tenant</td>
-</tr>
-<?php
-$rowCount = count($_POST["id"]);
-for($i=0;$i<$rowCount;$i++) {
-$result = mysqli_query($conn, "SELECT * FROM tenants WHERE id='" . $_POST["id"][$i] . "'");
-$row[$i]= mysqli_fetch_array($result);
-?>
-<tr>
-<td>
-<table border="0" cellpadding="10" cellspacing="0" width="500" align="center" class="tblSaveForm">
-<tr>
-<td><label>Username</label></td>
-<td><input type="hidden" name="id[]" class="txtField" value="<?php echo $row[$i]['id']; ?>">
-	<input type="text" name="username[]" class="txtField" value="<?php echo $row[$i]['username']; ?>"></td>
-</tr>
-<td><label>Name</label></td>
-<td><input type="text" name="name[]" class="txtField" value="<?php echo $row[$i]['name']; ?>"></td>
-</tr>
-<td><label>Email</label></td>
-<td><input type="email" name="Email[]" class="txtField" value="<?php echo $row[$i]['Email']; ?>"></td>
-</tr>
-</tr>
-<td><label>Contact</label></td>
-<td><input type="text" name="Contact[]" class="txtField" value="<?php echo $row[$i]['Contact']; ?>"></td>
-</tr>
-</tr>
-<td><label>Block</label></td>
-<td><input type="text" name="blockname[]" class="txtField" value="<?php echo $row[$i]['blockname']; ?>"></td>
-</tr>
-<td><label>House</label></td>
-<td><input type="text" name="house[]" class="txtField" value="<?php echo $row[$i]['house']; ?>"></td>
-</tr>
-<td><label>Rent</label></td>
-<td><input type="text" name="rent[]" class="txtField" value="<?php echo $row[$i]['rent']; ?>"></td>
-</tr>
-</tr>
-<td><label>Equipments</label></td>
-<td><input type="text" name="Equipments[]" class="txtField" value="<?php echo $row[$i]['Equipments']; ?>"></td>
-</tr>
-</table>
-</td>
-</tr>
-<?php
-}
-?>
-<tr>
-<td colspan="2"><input type="submit" name="submit" value="Save" class="btnSubmit"></td>
-</tr>
-</table>
-</div>
-</form>
-</body></html>
+    <div id="wrapper">
+        <section id="admin">
+    <h1>ENROLLED TENANTS</h1>
+    <table class="data-table">  
+        <thead>
+            <tr>
+                <th>NO</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Block</th>
+                <th>House</th>
+                <th>Equipments</th>
+                <th>Rent</th>
+                <th>Paid On</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $no     = 1;
+        while ($row = mysqli_fetch_array($query))
+        {
+            echo '<tr>
+                    <td>'.$no.'</td>
+                    <td>'.$row['name'].'</td>
+                    <td>'.$row['username'].'</td>
+                    <td>'.$row['Email'].'</td>
+                    <td>'.$row['Contact'].'</td>
+                    <td>'.$row['blockname'].'</td>
+                    <td>'.$row['house'].'</td>
+                    <td>'.$row['Equipments'].'</td>
+                    <td>'.$row['rent'].'</td>
+                    <td>'.$row['date'].'</td>
+                </tr>';
+            $no++;
+        }?>
+        </tbody>
+    </table>
+</section>
+    </div>
+
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    </script>
+
+</body>
+
+</html>

@@ -45,6 +45,7 @@
           <li><a href="#contact">Contact</a></li>
           <li><a href="login/login.php">Login</a></li>
           <li><a href="login/register.php">Sign Up</a></li>
+          <li><a href="login/tenant.php">Tenant</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>

@@ -219,7 +219,7 @@ if (!isAdmin()) {
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="indexTT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
@@ -287,7 +287,6 @@ if (!isAdmin()) {
                     <td>'.$row['Equipments'].'</td>
                     <td>'.$row['rent'].'</td>
                     <td>'.$row['date'].'</td>
-                    <td><input type="submit" name="update" value="Update" onClick="setUpdateAction();" /></td>
                 </tr>';
             $no++;
         }?>

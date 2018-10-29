@@ -75,6 +75,8 @@ function register(){
 			$_SESSION['success']  = "New user successfully created!!";
 			header('location: ../adminTT/admin.php');
 		}else{
+			$query = "INSERT INTO users (name, username, Email, password, Contact, access_level) 
+					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '3')";
 			$query = "INSERT INTO tenants (name, username, Email, password, Contact, access_level, blockname, house, rent, Equipments) 
 					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '3', '$blockname', '$house', '$rent', '$Equipments')";
 			mysqli_query($db, $query);

@@ -1,10 +1,7 @@
-<?php 
-include('functions.php');
-if (!isAdmin()) {
-  $_SESSION['msg'] = "You must log in first";
-  header('location: ../login/login.php');
-}
- ?>
+<?php
+require_once "db.php";
+$result = mysqli_query($conn, "SELECT * FROM tenants");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,23 +27,105 @@ if (!isAdmin()) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="icon" type="image/png" href="favicon.gif"/>
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="icon" type="image/png" href="favicon.gif"/>
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 
+    <link rel="stylesheet" type="text/css" href="stylesss.css" />
+    <link rel="icon" type="image/png" href="favicon.gif"/>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script language="javascript" src="users.js" type="text/javascript"></script>
+     <style type="text/css">
+        body {
+            font-size: 15px;
+            color: #343d44;
+            font-family: "segoe-ui", "open-sans", tahoma, arial;
+            padding: 0;
+            margin: 0;
+        }
+        table {
+            margin: auto;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+            font-size: 12px;
+        }
 
+        h1 {
+            margin: 25px auto 0;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 17px;
+        }
+
+        table td {
+            transition: all .5s;
+        }
+        
+        /* Table */
+        .data-table {
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 537px;
+        }
+
+        .data-table th, 
+        .data-table td {
+            border: 1px solid #e1edff;
+            padding: 7px 17px;
+        }
+        .data-table caption {
+            margin: 7px;
+        }
+
+        /* Table Header */
+        .data-table thead th {
+            background-color: #508abb;
+            color: #FFFFFF;
+            border-color: #6ea1cc !important;
+            text-transform: uppercase;
+        }
+
+        /* Table Body */
+        .data-table tbody td {
+            color: #353535;
+        }
+        .data-table tbody td:first-child,
+        .data-table tbody td:nth-child(4),
+        .data-table tbody td:last-child {
+            text-align: right;
+        }
+
+        .data-table tbody tr:nth-child(odd) td {
+            background-color: #f4fbff;
+        }
+        .data-table tbody tr:hover td {
+            background-color: #ffffa2;
+            border-color: #ffff0f;
+        }
+
+        /* Table Footer */
+        .data-table tfoot th {
+            background-color: #e5f5ff;
+            text-align: right;
+        }
+        .data-table tfoot th:first-child {
+            text-align: left;
+        }
+        .data-table tbody td:empty
+        {
+            background-color: #ffcccc;
+        }
+    </style>
   </head>
 
   <body id="page-top">
@@ -156,29 +235,48 @@ if (!isAdmin()) {
             </li>
             <li class="breadcrumb-item active">KejaManage</li>
           </ol>
-<html lang="en">
-<body>
-	
-	<form action="create_caretaker.php" method="post" class="form-style-9">
-		<?php echo display_error(); ?>
-<ul>
-<li>
-    <input type="text" name="name" class="field-style field-split align-left" placeholder="Name" />
-    <input type="text" name="username" class="field-style field-split align-right" placeholder="Username" />
 
-</li>
-<li>
-    <input type="email" name="Email" class="field-style field-split align-left" placeholder="Email" />
-    <input type="password" name="password" class="field-style field-split align-right" placeholder="Password" />
-</li>
-<li>
-    <input type="text" name="Contact" class="field-style field-split align-left" placeholder="Phone Number" />
-</li>
-<li>
-<input type="submit" name="register_btn" value="+ Add Caretaker"/>
-</li>
-</ul>
+<form name="frmUser" method="post" action="edit_user.php" class="form-style-9">
+<div style="width:500px;">
+<table  class="data-table">
+<tr class="listheader">
+<td></td>
+<td>Name</td>
+<td>Username</td>
+<td>Email</td>
+<td>Contact</td>
+<td>Block</td>
+<td>House</td>
+<td>Rent</td>
+<td>Equipments</td>
+</tr>
+<?php
+$i=0;
+while($row = mysqli_fetch_array($result)) {
+if($i%2==0)
+$classname="evenRow";
+else
+$classname="oddRow";
+?>
+<tr class="<?php if(isset($classname)) echo $classname;?>">
+<td><input type="checkbox" name="id[]" value="<?php echo $row["id"]; ?>" ></td>
+<td><?php echo $row["name"]; ?></td>
+<td><?php echo $row["username"]; ?></td>
+<td><?php echo $row["Email"]; ?></td>
+<td><?php echo $row["Contact"]; ?></td>
+<td><?php echo $row["blockname"]; ?></td>
+<td><?php echo $row["house"]; ?></td>
+<td><?php echo $row["rent"]; ?></td>
+<td><?php echo $row["Equipments"]; ?></td>
+</tr>
+<?php
+$i++;
+}
+?>
+<tr class="listheader">
+<td colspan="2"><input type="button" name="update" value="Update" onClick="setUpdateAction();" /></td>
+</tr>
+</table>
 </form>
-
-</body>
-</html>
+</div>
+</body></html>

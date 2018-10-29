@@ -1,9 +1,5 @@
 <?php 
   include('functions.php');
-if (!isCareTaker()) {
-  $_SESSION['msg'] = "You must log in first";
-  header('location: ../login/login.php');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,23 +76,28 @@ if (!isCareTaker()) {
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="admin.php">
+          <a class="nav-link" href="caretaker.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="indexT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="indexC.php">
+            <i class="fas fa-comments"></i>
+            <span>Announcements</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="caretakerTenants.php">
             <i class="fas fa-dollar-sign"></i>
             <span>Payments</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="deleteF.php">
+          <a class="nav-link" href="deleteT.php">
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
@@ -124,8 +125,24 @@ if (!isCareTaker()) {
                   </div>
                   <div class="mr-5">Enrolled Tenants</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="tenants.php">
+                <a class="card-footer text-white clearfix small z-1" href="indexT.php">
                   <span class="float-left">View Tenants</span>
+                  <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-danger o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fas fa-comments"></i>
+                  </div>
+                  <div class="mr-5">Announcements Posted</div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="../adminTT/indexC.php">
+                  <span class="float-left">View Announcements Posted!</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -140,7 +157,7 @@ if (!isCareTaker()) {
                   </div>
                   <div class="mr-5">Payments Made!</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="../adminTT/tenants.php">
+                <a class="card-footer text-white clearfix small z-1" href="../adminTT/caretakerTenants.php">
                   <span class="float-left">View Payments Made</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
@@ -156,7 +173,7 @@ if (!isCareTaker()) {
                   </div>
                   <div class="mr-5">Remove User</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="../adminTT/deleteF.php">
+                <a class="card-footer text-white clearfix small z-1" href="../adminTT/deleteT.php">
                   <span class="float-left">Remove User</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>

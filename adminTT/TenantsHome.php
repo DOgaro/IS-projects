@@ -1,3 +1,6 @@
+<?php
+include('../login/functionss.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 

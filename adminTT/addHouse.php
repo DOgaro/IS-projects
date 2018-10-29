@@ -223,7 +223,7 @@ if (!isAdmin()) {
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="indexTT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
@@ -294,42 +294,59 @@ if (!isAdmin()) {
 </ul>
 </form>
 
-<div id="wrapper">
-        <section id="admin">
-    <h1>HOUSES</h1>
-    <table class="data-table">  
-        <thead>
-            <tr>
-                <th>NO</th>
-                <th>Block</th>
-                <th>Name</th>
-                <th>Rent</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="container-fluid bg-3 text-center">    
+  <div class="row">
+      <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "kejamanage";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM house";
+$result = $conn->query($sql);
+
+?>
+<div class="table-responsive">
+<table class="table">
+        <tr class="header">
+            <td>Block</td>
+            <td>House</td>
+            <td>Rent</td>
+            <td>Type</td>
+            <td>Status</td>
+            <td><i class="fas fa-trash-alt"></i></td>
+        </tr>
         <?php
-        $no     = 1;
-        while ($row = mysqli_fetch_array($query))
-        {
-            echo '<tr>
-                    <td>'.$no.'</td>
-                    <td>'.$row['blockname'].'</td>
-                    <td>'.$row['house'].'</td>
-                    <td>'.$row['rent'].'</td>
-                    <td>'.$row['type'].'</td>
-                    <td>'.$row['status'].'</td>
-                    <td><i class="fas fa-user-edit"></i></td>
-                    <td><input type="submit" name="update_btn" value="Update"/></td>
-                </tr>';
-            $no++;
-        }?>
-        </tbody>
+           while ($row =$result->fetch_assoc()) {
+            $n=$row['blockname'];
+            $um=$row['house'];
+            $em=$row['rent'];
+            $cn=$row['type'];
+            $bl=$row['status'];
+               echo "<tr class= info>";
+               echo "<td>".$n."</td>";
+               echo "<td>".$um."</td>";
+               echo "<td>".$em."</td>";
+               echo "<td>".$cn."</td>";
+               echo "<td>".$bl."</td>";
+               echo "<td><a class=\"btn btn-danger\" href=\"delete.php?username=".$um."\">Delete</a></td>";
+               echo "</tr>";
+           }
+
+$conn->close();
+        ?>
     </table>
-</section>
-    </div>
+    </div>             
+              <hr/>         
+  </div>
+</div>
 
     <!-- /#wrapper -->
 

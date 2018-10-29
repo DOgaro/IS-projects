@@ -1,4 +1,6 @@
-
+<?php
+include ('functions.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -195,49 +197,28 @@ $("#house").html(houses);
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="admin.php">
+          <a class="nav-link" href="caretaker.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="addUnit.php">
-            <i class="fas fa-home"></i>
-            <span>Add Unit</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="addHouse.php">
-            <i class="fas fa-home"></i>
-            <span>Add House</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../adminTT/create_user.php">
-            <i class="fas fa-user-plus"></i>
-            <span>Add Tenant</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../adminTT/create_caretaker.php">
-            <i class="fas fa-user-plus"></i>
-            <span>Add Caretaker</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="indexTT.php">
+          <a class="nav-link" href="indexT.php">
             <i class="fas fa-users"></i>
             <span>Tenants</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="indexC.php">
             <i class="fas fa-comments"></i>
             <span>Announcements</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="tenants.php">
+          <a class="nav-link" href="caretakerTenants.php">
             <i class="fas fa-dollar-sign"></i>
             <span>Payments</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="deleteF.php">
+          <a class="nav-link" href="deleteT.php">
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>

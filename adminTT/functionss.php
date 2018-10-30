@@ -25,11 +25,9 @@ function register(){
 	$Email       =  e($_POST['Email']);
 	$password  =  e($_POST['password']);
 	$Contact    =  e($_POST['Contact']);
-	//$user_type    =  e($_POST['user_type']);
 	$blockname    =  e($_POST['blockname']);
 	$house    =  e($_POST['house']);
 	$Equipments  =  e($_POST['Equipments']);
-	$rent    =  e($_POST['rent']);
 
 	// form validation: ensure that the form is correctly filled
 	if (empty($name)) { 
@@ -47,9 +45,6 @@ function register(){
 	if (empty($Contact)) { 
 		array_push($errors, "Contact is required"); 
 	}
-//	if (empty($user_type)) { 
-//		array_push($errors, "User Type is required"); 
-//	}
 	if (empty($blockname)) { 
 		array_push($errors, "Block is required"); 
 	}
@@ -59,9 +54,6 @@ function register(){
 	if (empty($Equipments)) { 
 		array_push($errors, "Equipments is required"); 
 	}
-	if (empty($rent)) { 
-		array_push($errors, "Rent is required"); 
-	}
 
 	// register user if there are no errors in the form
 	if (count($errors) == 0) {
@@ -69,16 +61,16 @@ function register(){
 
 		if (isset($_POST['access_level'])) {
 			$user_type = e($_POST['access_level']);
-			$query = "INSERT INTO tenants (name, username, Email, password, Contact, access_level, blockname, house, Equipments, rent) 
-					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '$access_level', '$blockname', '$house', '$Equipments', '$rent')";
+			$query = "INSERT INTO tenants (name, username, Email, password, Contact, access_level, blockname, house, Equipments) 
+					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '$access_level', '$blockname', '$house', '$Equipments')";
 			mysqli_query($db, $query);
 			$_SESSION['success']  = "New user successfully created!!";
 			header('location: ../adminTT/admin.php');
 		}else{
 			$query = "INSERT INTO users (name, username, Email, password, Contact, access_level) 
 					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '3')";
-			$query = "INSERT INTO tenants (name, username, Email, password, Contact, access_level, blockname, house, rent, Equipments) 
-					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '3', '$blockname', '$house', '$rent', '$Equipments')";
+			$query = "INSERT INTO tenants (name, username, Email, password, Contact, access_level, blockname, house, Equipments) 
+					  VALUES('$name', '$username', '$Email', '$password', '$Contact', '3', '$blockname', '$house', '$Equipments')";
 			mysqli_query($db, $query);
 
 			// get id of the created user
@@ -121,9 +113,10 @@ function display_error() {
 }	
 function isLoggedIn()
 {
-	if (isset($_SESSION['user'])) {
+	if (isset($_SESSION['user']) && $_SESSION['user']['access_level'] == '3' ) {
 		return true;
-	}else{
+	}
+	else{
 		return false;
 	}
 }

@@ -1,5 +1,5 @@
-<?php
-include('functions.php');
+<?php 
+include('rent.php');
 $db_host = 'localhost'; // Server Name
 $db_user = 'root'; // Username
 $db_pass = ''; // Password
@@ -11,17 +11,13 @@ if (!$conn) {
 }
 
 $sql = 'SELECT * 
-        FROM tenants';
+        FROM house';
 $query = mysqli_query($conn, $sql);
 
 if (!$query) {
     die ('SQL Error: ' . mysqli_error($conn));
 }
-if (!isAdmin()) {
-  $_SESSION['msg'] = "You must log in first";
-  header('location: ../login/login.php');
-}
-?>
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,22 +43,24 @@ if (!isAdmin()) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="favicon.gif"/>
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="icon" type="image/png" href="favicon.gif"/>
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+  <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" type="text/css" href="css/util.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script language="javascript" src="users.js" type="text/javascript"></script>
-     <style type="text/css">
+
+
+ <style type="text/css">
         body {
             font-size: 15px;
             color: #343d44;
@@ -81,6 +79,7 @@ if (!isAdmin()) {
             text-align: center;
             text-transform: uppercase;
             font-size: 17px;
+            text-align: center;
         }
 
         table td {
@@ -142,6 +141,7 @@ if (!isAdmin()) {
             background-color: #ffcccc;
         }
     </style>
+
   </head>
 
   <body id="page-top">
@@ -251,49 +251,87 @@ if (!isAdmin()) {
             </li>
             <li class="breadcrumb-item active">KejaManage</li>
           </ol>
+<html lang="en">
 <body>
+  
+  <form action="addRent.php" method="post" class="form-style-9">
+    <?php echo display_error(); ?>
+<ul>
+  <li>
+  <?php
+    $con=mysqli_connect("localhost","root","","kejamanage");
+    // Check connection
+    if (mysqli_connect_errno()) {
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    }
+?>
+     <select class="field-style one field-full align-none" name="username">
+      <option value="0">Select Tenant</option>
+         <?php 
+         $result = mysqli_query($con,"SELECT username FROM tenants");
 
-    <div id="wrapper">
-        <section id="admin">
-    <h1>ENROLLED TENANTS</h1>
-    <table class="data-table">  
-        <thead>
-            <tr>
-                <th>NO</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Contact</th>
-                <th>Block</th>
-                <th>House</th>
-                <th>Equipments</th>
-                <th>Rent</th>
-                <th>Paid On</th>
-            </tr>
-        </thead>
-        <tbody>
+         while($row = mysqli_fetch_array($result)) 
+             echo "<option value='" . $row['username'] . "'>" . $row['username'] . "</option>";
+         ?>
+     </select>
+</select>
+</li>
+<li>
+    <input type="text" name="rent" class="field-style field-split align-left" placeholder="Rent paid?" />
+</li>
+<li>
+<input type="submit" name="register_btn" value="+ Add Payment"/>
+</li>
+</ul>
+</form>
+
+<div class="container-fluid bg-3 text-center">    
+  <div class="row">
+      <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "kejamanage";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM rent";
+$result = $conn->query($sql);
+
+?>
+<div class="table-responsive">
+<table class="table">
+        <tr class="header">
+            <td>Name</td>
+            <td>Rent</td>
+            <td>Date</td>
+            <td><i class="fas fa-trash-alt"></i></td>
+        </tr>
         <?php
-        $no     = 1;
-        while ($row = mysqli_fetch_array($query))
-        {
-            echo '<tr>
-                    <td>'.$no.'</td>
-                    <td>'.$row['name'].'</td>
-                    <td>'.$row['username'].'</td>
-                    <td>'.$row['Email'].'</td>
-                    <td>'.$row['Contact'].'</td>
-                    <td>'.$row['blockname'].'</td>
-                    <td>'.$row['house'].'</td>
-                    <td>'.$row['Equipments'].'</td>
-                    <td>'.$row['rent'].'</td>
-                    <td>'.$row['date'].'</td>
-                </tr>';
-            $no++;
-        }?>
-        </tbody>
+           while ($row =$result->fetch_assoc()) {
+            $um=$row['username'];
+            $em=$row['rent'];
+            $cn=$row['date'];
+               echo "<tr class= info>";
+               echo "<td>".$um."</td>";
+               echo "<td>".$em."</td>";
+               echo "<td>".$cn."</td>";
+               echo "<td><a class=\"btn btn-danger\" href=\"delete.php?username=".$um."\">Delete</a></td>";
+               echo "</tr>";
+           }
+
+$conn->close();
+        ?>
     </table>
-</section>
-    </div>
+    </div>             
+              <hr/>         
+  </div>
+</div>
 
     <!-- /#wrapper -->
 
@@ -326,6 +364,6 @@ if (!isAdmin()) {
 
     </script>
 
-</body>
 
+</body>
 </html>

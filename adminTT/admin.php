@@ -2,7 +2,7 @@
 include('functions.php');
 if (!isAdmin()) {
   $_SESSION['msg'] = "You must log in first";
-  header('location: ../login/login.php');
+  header('location: ../login/login.php?login=error');
 }
 ?>
 <!DOCTYPE html>
@@ -59,7 +59,7 @@ if (!isAdmin()) {
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i><?php  if (isset($_SESSION['user'])) : ?>
-          <strong><?php echo $_SESSION['user']['username']; ?></strong><?php endif ?>
+          <strong><?php echo 'Welcome, '. $_SESSION['user']['username']; ?></strong><?php endif ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <div class="dropdown-divider"></div>
@@ -125,6 +125,11 @@ if (!isAdmin()) {
           <a class="nav-link" href="deleteF.php">
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
         </li>
       </ul>
 

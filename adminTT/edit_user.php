@@ -263,6 +263,7 @@ for($i=0;$i<$usersCount;$i++) {
 mysqli_query($conn, "UPDATE tenants SET id='" . $_POST["id"][$i] . "', username='" . $_POST["username"][$i] . "', name='" . $_POST["name"][$i] . "', Email='" . $_POST["Email"][$i] . "', Contact='" . $_POST["Contact"][$i] . "', blockname='" . $_POST["blockname"][$i] . "', house='" . $_POST["house"][$i] . "', rent='" . $_POST["rent"][$i] . "', Equipments='" . $_POST["Equipments"][$i] . "' WHERE id='" . $_POST["id"][$i] . "'");
 //header("Location: indexTT.php");
 echo("Changed successfully");
+echo "<script>window.open('indexTT.php','_self')</script>";
 }
 }
 ?>

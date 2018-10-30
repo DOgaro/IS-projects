@@ -1,5 +1,9 @@
 <?php 
 include('functionss.php');
+if (!isLoggedIn()) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: ../login/tenant.php?login=error');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,6 +187,11 @@ span.posted-by {
           <a class="nav-link" href="comments.php">
             <i class="fas fa-comments"></i>
             <span>Announcements</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
         </li>
       </ul>
 

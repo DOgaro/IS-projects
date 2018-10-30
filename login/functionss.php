@@ -90,10 +90,10 @@ function login(){
 				header('location: ../adminTT/caretaker.php');		  
 			}
 			else{
-				$_SESSION['id'] = $logged_in_user;
+				$_SESSION['user'] = $logged_in_user;
 				$_SESSION['success']  = "You are now logged in";
 
-				header('location: ../adminTT/TenantsHome.php');
+				header('location: ../adminTT/TenantsHome.php?login=success');
 			}
 		}else {
 			array_push($errors, "Wrong username/password combination");
@@ -102,9 +102,10 @@ function login(){
 }
 function isLoggedIn()
 {
-	if (isset($_SESSION['user'])) {
+	if (isset($_SESSION['user']) && $_SESSION['user']['access_level'] == '3' ) {
 		return true;
-	}else{
+	}
+	else{
 		return false;
 	}
 }

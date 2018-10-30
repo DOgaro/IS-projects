@@ -1,7 +1,4 @@
-<?php
-require_once "db.php";
-$result = mysqli_query($conn, "SELECT * FROM tenants");
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,11 +38,33 @@ $result = mysqli_query($conn, "SELECT * FROM tenants");
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-
     <link rel="stylesheet" type="text/css" href="stylesss.css" />
-    <link rel="icon" type="image/png" href="favicon.gif"/>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script language="javascript" src="users.js" type="text/javascript"></script>
+
+    <script language="javascript" src="houses.js" type="text/javascript"></script>
+    <script type="text/javascript">
+$(document).ready(function()
+{
+$("#blockname").change(function()
+{
+var blockname=$(this).val();
+var post_id = 'id='+ blockname;
+ 
+$.ajax
+({
+type: "POST",
+url: "ajax.php",
+data: post_id,
+cache: false,
+success: function(houses)
+{
+$("#house").html(houses);
+} 
+});
+ 
+});
+});
+</script>
      <style type="text/css">
         body {
             font-size: 15px;
@@ -235,47 +254,60 @@ $result = mysqli_query($conn, "SELECT * FROM tenants");
             </li>
             <li class="breadcrumb-item active">KejaManage</li>
           </ol>
+<?php
+require_once "db.php";
 
-<form name="frmUser" method="post" action="edit_user.php" class="form-style-9">
-<div style="width:500px;">
-<table  class="data-table">
-<tr class="listheader">
-<td></td>
-<td>Name</td>
-<td>Username</td>
-<td>Email</td>
-<td>Contact</td>
-<td>Block</td>
-<td>House</td>
-<td>Rent</td>
-<td>Equipments</td>
-</tr>
-<?php
-$i=0;
-while($row = mysqli_fetch_array($result)) {
-if($i%2==0)
-$classname="evenRow";
-else
-$classname="oddRow";
-?>
-<tr class="<?php if(isset($classname)) echo $classname;?>">
-<td><input type="checkbox" name="id[]" value="<?php echo $row["id"]; ?>" ></td>
-<td><?php echo $row["name"]; ?></td>
-<td><?php echo $row["username"]; ?></td>
-<td><?php echo $row["Email"]; ?></td>
-<td><?php echo $row["Contact"]; ?></td>
-<td><?php echo $row["blockname"]; ?></td>
-<td><?php echo $row["house"]; ?></td>
-<td><?php echo $row["rent"]; ?></td>
-<td><?php echo $row["Equipments"]; ?></td>
-</tr>
-<?php
-$i++;
+if(isset($_POST["submit"]) && $_POST["submit"]!="") {
+$usersCount = count($_POST["house"]);
+for($i=0;$i<$usersCount;$i++) {
+mysqli_query($conn, "UPDATE house SET Hid='" . $_POST["Hid"][$i] . "', status='" . $_POST["status"][$i] . "', house='" . $_POST["house"][$i] . "', rent='" . $_POST["rent"][$i] . "', type='" . $_POST["type"][$i] . "' WHERE Hid='" . $_POST["Hid"][$i] . "'");
+echo("Changed successfully");
+echo "<script>window.open('addHouse.php','_self')</script>";
+}
+//header("Location: addHouse.php");
 }
 ?>
-<tr class="listheader">
-<td colspan="2"><input type="button" name="update" value="Update" onClick="setUpdateAction();" /></td>
+<form name="frmUser" method="post" action="" class="form-style-9" >
+<div style="width:500px;">
+<table border="0" cellpadding="10" cellspacing="0" width="500" align="center" class="data-table">
+<tr class="tableheader">
+<td>Edit Tenant</td>
+</tr>
+<?php
+$rowCount = count($_POST["Hid"]);
+for($i=0;$i<$rowCount;$i++) {
+$result = mysqli_query($conn, "SELECT * FROM house WHERE Hid='" . $_POST["Hid"][$i] . "'");
+$row[$i]= mysqli_fetch_array($result);
+?>
+<tr>
+<td>
+<table border="0" cellpadding="10" cellspacing="0" width="500" align="center" class="tblSaveForm">
+<tr>
+<td><label>House</label></td>
+<td><input type="hidden" name="Hid[]" class="txtField" value="<?php echo $row[$i]['Hid']; ?>">
+  <input type="text" name="house[]" class="txtField" value="<?php echo $row[$i]['house']; ?>"></td>
+</tr>
+<td><label>Rent</label></td>
+<td><input type="text" name="rent[]" class="txtField" value="<?php echo $row[$i]['rent']; ?>"></td>
+</tr>
+</tr>
+<td><label>Type</label></td>
+<td><input type="text" name="type[]" class="txtField" value="<?php echo $row[$i]['type']; ?>"></td>
+</tr>
+</tr>
+<td><label>Status</label></td>
+<td><input type="text" name="status[]" class="txtField" value="<?php echo $row[$i]['status']; ?>"></td>
 </tr>
 </table>
+</td>
+</tr>
+<?php
+}
+?>
+<tr>
+<td colspan="2"><input type="submit" name="submit" value="Save" class="btnSubmit"></td>
+</tr>
+</table>
+</div>
 </form>
 </body></html>

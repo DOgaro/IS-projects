@@ -144,13 +144,13 @@ function login(){
 
 				$_SESSION['user'] = $logged_in_user;
 				$_SESSION['success']  = "You are now logged in";
-				header('location: ../adminTT/admin.php');		  
+				header('location: ../adminTT/admin.php?login=success');		  
 			}
 			else if ($logged_in_user['access_level'] == '2') {
 
 				$_SESSION['user'] = $logged_in_user;
 				$_SESSION['success']  = "You are now logged in";
-				header('location: ../adminTT/caretaker.php');		  
+				header('location: ../adminTT/caretaker.php?login=success');		  
 			}
 			else{
 				$_SESSION['user'] = $logged_in_user;
@@ -169,14 +169,6 @@ function isAdmin()
 		return true;
 	}
 	else{
-		return false;
-	}
-}
-function isCareTaker()
-{
-	if (isset($_SESSION['user']) && $_SESSION['user']['access_level'] == '2'  ) {
-		return true;
-	}else{
 		return false;
 	}
 }

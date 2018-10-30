@@ -1,5 +1,9 @@
 <?php
 include('functionss.php');
+if (!isLoggedIn()) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: ../login/tenant.php?login=error');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,8 +75,8 @@ include('functionss.php');
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle fa-fw"></i></i><?php  if (isset($_SESSION['id'])) : ?>
-          <strong><?php echo $_SESSION['id']['username']; ?></strong><?php endif ?>
+            <i class="fas fa-user-circle fa-fw"></i></i><?php  if (isset($_SESSION['user'])) : ?>
+          <strong><?php echo 'Welcome, '. $_SESSION['user']['username']; ?></strong><?php endif ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <div class="dropdown-divider"></div>
@@ -104,6 +108,11 @@ include('functionss.php');
           <a class="nav-link" href="comments.php">
             <i class="fas fa-comments"></i>
             <span>Announcements</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
         </li>
       </ul>
 
@@ -140,17 +149,15 @@ include('functionss.php');
         <div class="profile_info">
             <img src="avatar.png" style="height: 70px;">
             <div>
-                <?php  if (isset($_SESSION['id'])) : ?>
-                   Username: <strong style="color: #888;"><?php echo $_SESSION['id']['username']; ?></strong><br>
-                   Name:  <strong style="color: #888;"><?php echo $_SESSION['id']['name']; ?></strong><br>
-                   Email:  <strong style="color: #888;"><?php echo $_SESSION['id']['Email']; ?></strong><br>
-                   Contact: <strong style="color: #888;"><?php echo $_SESSION['id']['Contact']; ?></strong><br>
-                   Block: <strong style="color: #888;"><?php echo $_SESSION['id']['blockname']; ?></strong><br>
-                   House: <strong style="color: #888;"><?php echo $_SESSION['id']['house']; ?></strong><br>
-                   Rent: <strong style="color: #888;"><?php echo $_SESSION['id']['rent']; ?></strong><br>
-                   Equipments: <strong style="color: #888;"><?php echo $_SESSION['id']['Equipments']; ?></strong><br>
-                   <a href="TenantsHome.php?logout='1'" style="color: red;">LOGOUT</a>
-
+                <?php  if (isset($_SESSION['user'])) : ?>
+                   Username: <strong style="color: #888;"><?php echo $_SESSION['user']['username']; ?></strong><br>
+                   Name:  <strong style="color: #888;"><?php echo $_SESSION['user']['name']; ?></strong><br>
+                   Email:  <strong style="color: #888;"><?php echo $_SESSION['user']['Email']; ?></strong><br>
+                   Contact: <strong style="color: #888;"><?php echo $_SESSION['user']['Contact']; ?></strong><br>
+                   Block: <strong style="color: #888;"><?php echo $_SESSION['user']['blockname']; ?></strong><br>
+                   House: <strong style="color: #888;"><?php echo $_SESSION['user']['house']; ?></strong><br>
+                   Rent: <strong style="color: #888;"><?php echo $_SESSION['user']['rent']; ?></strong><br>
+                   Equipments: <strong style="color: #888;"><?php echo $_SESSION['user']['Equipments']; ?></strong><br>
                 <?php endif ?>
             </div>
         </div>

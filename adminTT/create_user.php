@@ -169,6 +169,11 @@ $("#house").html(houses);
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
+        </li>
       </ul>
 
       <div id="content-wrapper">
@@ -199,7 +204,6 @@ $("#house").html(houses);
 </li>
 <li>
     <input type="text" name="Contact" class="field-style field-split align-left" placeholder="Phone Number" />
-    <input type="text" name="rent" class="field-style field-split align-right" placeholder="Payment" />
 </li>
 <li>
      <select name="blockname" id="blockname" class="field-style one field-full align-none" placeholder="Block">
@@ -218,13 +222,18 @@ $("#house").html(houses);
      <option value="0">Select House</option> 
      <?php 
          include('database.php');
-         $sql = mysqli_query($con,"SELECT `house` FROM house WHERE blockname='$blockname' AND `status`='Vacant'");
-
-         while($row = mysqli_fetch_array($sql)) 
+         //echo $blockname;
+         $sql = mysqli_query($con,"SELECT house,status,blockname FROM house WHERE blockname='" . $blockname . "' AND status='Vacant'") or die(mysqli_error($con));
+         
+          
+         while($row = mysqli_fetch_array($sql)) {
              echo "<option value='" . $row['house'] . "'>" . $row['house'] . "</option>";
+         }
            $sql = mysqli_query($con,"UPDATE `house` SET `status` = 'Occupied' WHERE `house` = '$house'");
+
          ?>
      </select>
+
 </li>
 <li>
 <textarea name="Equipments" class="field-style one" placeholder="Equipments in the house"></textarea>

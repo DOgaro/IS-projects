@@ -222,6 +222,11 @@ $result = mysqli_query($conn, "SELECT * FROM tenants");
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
+        </li>
       </ul>
 
       <div id="content-wrapper">
@@ -247,7 +252,6 @@ $result = mysqli_query($conn, "SELECT * FROM tenants");
 <td>Contact</td>
 <td>Block</td>
 <td>House</td>
-<td>Rent</td>
 <td>Equipments</td>
 </tr>
 <?php
@@ -266,7 +270,6 @@ $classname="oddRow";
 <td><?php echo $row["Contact"]; ?></td>
 <td><?php echo $row["blockname"]; ?></td>
 <td><?php echo $row["house"]; ?></td>
-<td><?php echo $row["rent"]; ?></td>
 <td><?php echo $row["Equipments"]; ?></td>
 </tr>
 <?php

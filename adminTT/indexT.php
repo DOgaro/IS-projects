@@ -202,6 +202,11 @@ $result = mysqli_query($conn, "SELECT * FROM tenants");
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
+        </li>
       </ul>
 
       <div id="content-wrapper">

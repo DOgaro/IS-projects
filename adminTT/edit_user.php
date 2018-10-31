@@ -241,6 +241,11 @@ $("#house").html(houses);
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
+        </li>
       </ul>
 
       <div id="content-wrapper">
@@ -260,7 +265,7 @@ require_once "db.php";
 if(isset($_POST["submit"]) && $_POST["submit"]!="") {
 $usersCount = count($_POST["username"]);
 for($i=0;$i<$usersCount;$i++) {
-mysqli_query($conn, "UPDATE tenants SET id='" . $_POST["id"][$i] . "', username='" . $_POST["username"][$i] . "', name='" . $_POST["name"][$i] . "', Email='" . $_POST["Email"][$i] . "', Contact='" . $_POST["Contact"][$i] . "', blockname='" . $_POST["blockname"][$i] . "', house='" . $_POST["house"][$i] . "', rent='" . $_POST["rent"][$i] . "', Equipments='" . $_POST["Equipments"][$i] . "' WHERE id='" . $_POST["id"][$i] . "'");
+mysqli_query($conn, "UPDATE tenants SET id='" . $_POST["id"][$i] . "', username='" . $_POST["username"][$i] . "', name='" . $_POST["name"][$i] . "', Email='" . $_POST["Email"][$i] . "', Contact='" . $_POST["Contact"][$i] . "', blockname='" . $_POST["blockname"][$i] . "', house='" . $_POST["house"][$i] . "', Equipments='" . $_POST["Equipments"][$i] . "' WHERE id='" . $_POST["id"][$i] . "'");
 //header("Location: indexTT.php");
 echo("Changed successfully");
 echo "<script>window.open('indexTT.php','_self')</script>";
@@ -303,10 +308,6 @@ $row[$i]= mysqli_fetch_array($result);
 </tr>
 <td><label>House</label></td>
 <td><input type="text" name="house[]" class="txtField" value="<?php echo $row[$i]['house']; ?>"></td>
-</tr>
-<td><label>Rent</label></td>
-<td><input type="text" name="rent[]" class="txtField" value="<?php echo $row[$i]['rent']; ?>"></td>
-</tr>
 </tr>
 <td><label>Equipments</label></td>
 <td><input type="text" name="Equipments[]" class="txtField" value="<?php echo $row[$i]['Equipments']; ?>"></td>

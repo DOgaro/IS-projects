@@ -238,6 +238,11 @@ if (!$query) {
             <i class="fas fa-trash-alt"></i>
             <span>Remove User</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log Out</span></a>
+        </li>
       </ul>
 
       <div id="content-wrapper">
@@ -268,7 +273,7 @@ if (!$query) {
      <select class="field-style one field-full align-none" name="username">
       <option value="0">Select Tenant</option>
          <?php 
-         $result = mysqli_query($con,"SELECT username FROM tenants");
+         $result = mysqli_query($con,"SELECT username FROM tenants ORDER BY username");
 
          while($row = mysqli_fetch_array($result)) 
              echo "<option value='" . $row['username'] . "'>" . $row['username'] . "</option>";
